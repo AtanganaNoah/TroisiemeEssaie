@@ -1,10 +1,10 @@
 <?php
-// app/Http/Controllers/DashboardController.php
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Models\Quiz;
 
 class DashboardController extends Controller
 {
@@ -13,11 +13,23 @@ class DashboardController extends Controller
         $user = $request->user();
 
         return view('dashboard', [
-            'quizzesCount'  => $user->quizzes()->count(),
+
+            // Nombre de quiz créés
+            'quizzesCount' => $user->quizzes()->count(),
+
+            // Nombre de questions créées
             'questionsCount' => $user->questions()->count(),
-            'attemptsCount' => $user->attempts()->count(),
-            'latestQuizzes' => \App\Models\Quiz::where('is_published', true)
-                                    ->latest()->take(5)->get(),
+
+            // Tentatives uniquement pour les étudiants
+            'attemptsCount' => $user->role === 'student'
+                ? $user->attempts()->count()
+                : 0,
+
+            // Derniers quiz publiés
+            'latestQuizzes' => Quiz::where('is_published', true)
+                                    ->latest()
+                                    ->take(5)
+                                    ->get(),
         ]);
     }
 }
