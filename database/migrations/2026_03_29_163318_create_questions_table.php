@@ -7,17 +7,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
-    {
+    public function up()
+{
+    if (!Schema::hasTable('questions')) {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->text('text');
             $table->enum('difficulty', ['easy', 'medium', 'hard'])->default('medium');
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            // $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }
+}
 
     public function down(): void
     {
