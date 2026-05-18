@@ -71,6 +71,7 @@
             <a href="{{ route('questions.index') }}" class="nav-link hover:text-indigo-600 transition-colors">Questions</a>
             @endif
             <a href="{{ route('attempts.index') }}" class="nav-link hover:text-indigo-600 transition-colors">Mes tentatives</a>
+            <a href="{{ route('leaderboard.index') }}" class="nav-link hover:text-indigo-600 transition-colors">🏆 Classement</a>
         </div>
 
         <div class="flex items-center gap-3">

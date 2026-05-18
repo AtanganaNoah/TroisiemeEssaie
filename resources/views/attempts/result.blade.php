@@ -8,7 +8,20 @@
     {{-- Score card --}}
     <div class="card p-8 mb-6 text-center">
         <h1 class="text-2xl font-bold mb-1">{{ $attempt->quiz->title }}</h1>
-        <p class="text-sm mb-6" style="color:var(--muted)">Résultats de votre tentative</p>
+        <p class="text-sm mb-1" style="color:var(--muted)">Résultats de votre tentative</p>
+
+        {{-- ✅ IDENTITÉ DE L'ÉTUDIANT --}}
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-xl mb-5"
+             style="background:#EEF2FF; border:1px solid #C7D2FE;">
+            <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
+                  style="background:var(--primary); color:white">
+                {{ strtoupper(substr($attempt->user->name, 0, 1)) }}
+            </span>
+            <div class="text-left">
+                <p class="text-sm font-semibold" style="color:var(--primary)">{{ $attempt->user->name }}</p>
+                <p class="text-xs" style="color:var(--muted)">{{ $attempt->user->email }}</p>
+            </div>
+        </div>
 
         <div class="w-32 h-32 rounded-full mx-auto flex items-center justify-center mb-4"
              style="background: {{ $attempt->percentage() >= 50 ? '#D1FAE5' : '#FEE2E2' }};
@@ -32,10 +45,14 @@
             <a href="{{ route('dashboard') }}"
                class="px-4 py-2 rounded-xl text-sm font-medium border transition-colors hover:bg-gray-50"
                style="border-color:var(--border); color:var(--muted)">← Dashboard</a>
+            {{-- ✅ Lien vers le classement --}}
+            <a href="{{ route('leaderboard.index') }}"
+               class="px-4 py-2 rounded-xl text-sm font-medium border transition-colors hover:bg-indigo-50"
+               style="border-color:#C7D2FE; color:var(--primary)">🏆 Classement</a>
         </div>
     </div>
 
-    {{-- Détail --}}
+    {{-- Détail des réponses (inchangé) --}}
     @if($attempt->responses->count() > 0)
         <h2 class="font-semibold text-lg mb-4">Détail des réponses</h2>
         <div class="space-y-3">

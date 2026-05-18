@@ -7,7 +7,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\QuizController;        // ← manquant
 use App\Http\Controllers\QuestionController;    // ← manquant
 use App\Http\Controllers\AttemptController;     // ← manquant
-use App\Http\Controllers\ResponseController;    
+use App\Http\Controllers\ResponseController; 
+use App\Http\Controllers\LeaderboardController;
+
+// Dans le groupe auth middleware :
+Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard.index');   
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +49,8 @@ Route::post('quizzes/{quiz}/attach-questions', [QuizController::class, 'storeAtt
     // Responses
     Route::post('attempts/{attempt}/responses', [ResponseController::class, 'store'])->name('responses.store');
 });
+
+
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'create'])->name('register');
